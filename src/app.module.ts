@@ -5,11 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ParkingzoneModule } from './parkingzone/parkingzone.module';
-import { ForbiddenModule } from './forbidden/forbidden.module';
-import { ForbiddenModule } from './forbiddenzone/forbidden.module';
+import { KickboardsModule } from './kickboards/kickboards.module';
 import { AreaModule } from './area/area.module';
-import { ParkingzoneModule } from './parkingzone/parkingzone.module';
+import { CalculatorModule } from './calculator/calculator.module';
+import { RegularPolicesModule } from './regular-policies/regular-policies.module';
+
 
 @Module({
   imports: [
@@ -21,9 +21,11 @@ import { ParkingzoneModule } from './parkingzone/parkingzone.module';
     }),
     AuthModule,
     UsersModule,
-    ParkingzoneModule,
+    KickboardsModule,
     AreaModule,
-    ForbiddenModule,
+    CalculatorModule,
+    RegularPolicesModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

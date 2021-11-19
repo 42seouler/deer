@@ -10,6 +10,9 @@ export class User extends BaseCommonEntity {
   @Column()
   password: string;
 
+  @Column()
+  lastUsed: Date;
+
   @Column({
     type: 'enum',
     enum: UserRole,

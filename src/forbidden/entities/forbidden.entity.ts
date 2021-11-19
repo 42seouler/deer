@@ -12,6 +12,6 @@ export class Forbidden {
   @Column({ type: 'linestring' })
   forbidden_area_coords: number;
 
-/*    @ManyToOne(() => Area, (area) => area.forbidden)
-    area: Area;*/
+  @ManyToOne(() => Area, (area) => area.forbidden)
+  area: Area;
 }
