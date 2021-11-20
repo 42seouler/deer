@@ -13,6 +13,9 @@ import { Kickboard } from './kickboards/kickboard.entity';
 import { Area } from './area/area.entity';
 import { ForbiddenAreaModule } from './forbidden-area/forbidden-area.module';
 import { RegularPolicy } from './regular-policies/regular-policy';
+import { ParkingZoneModule } from './parking-zone/parking-zone.module';
+import { ParkingZone } from './parking-zone/parking-zone.entity';
+import { ForbiddenArea } from './forbidden-area/forbidden-area.entity';
 
 @Module({
   imports: [
@@ -22,7 +25,13 @@ import { RegularPolicy } from './regular-policies/regular-policy';
           autoLoadEntities: true,
         }),
     }),
-    TypeOrmModule.forFeature([Area, Kickboard, RegularPolicy]),
+    TypeOrmModule.forFeature([
+      Area,
+      Kickboard,
+      RegularPolicy,
+      ParkingZone,
+      ForbiddenArea,
+    ]),
     AuthModule,
     UsersModule,
     KickboardsModule,
@@ -30,8 +39,9 @@ import { RegularPolicy } from './regular-policies/regular-policy';
     CalculatorModule,
     RegularPolicesModule,
     ForbiddenAreaModule,
+    ParkingZoneModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

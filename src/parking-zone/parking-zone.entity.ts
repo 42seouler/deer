@@ -1,10 +1,10 @@
 import { Area } from 'src/area/area.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class ParkingZone {
   @PrimaryGeneratedColumn()
-  parkingzone_id: number;
+  id: number;
 
   @Column({ type: 'decimal', precision: 18, scale: 10 })
   parkingzone_center_lat: number; // 위도
@@ -15,6 +15,6 @@ export class ParkingZone {
   @Column({ type: 'float' })
   parkingzone_radius: number;
 
-  // @ManyToOne(() => Area)
-  // area: Area;
+  @ManyToOne(() => Area)
+  area: Area;
 }
