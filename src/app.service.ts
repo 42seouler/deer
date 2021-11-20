@@ -3,20 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Area } from './area/area.entity';
 import { Kickboard } from './kickboards/kickboard.entity';
-import { RegularPoliciesService } from './regular-policies/regular-policies.service';
 import { RegularPolicy } from './regular-policies/regular-policy';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap {
-
   constructor(
     @InjectRepository(Area)
     private readonly areaRepository: Repository<Area>,
     @InjectRepository(Kickboard)
     private readonly kickboardRepository: Repository<Kickboard>,
     @InjectRepository(RegularPolicy)
-    private readonly regularPolicyRepository: Repository<RegularPolicy>
-  ) { }
+    private readonly regularPolicyRepository: Repository<RegularPolicy>,
+  ) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -24,19 +22,6 @@ export class AppService implements OnApplicationBootstrap {
 
   // 서버 부트 스트랩 될 때 DB 초기화
   async onApplicationBootstrap(): Promise<any> {
-    const kickboards = this.kickboardRepository
-      .createQueryBuilder()
-      .insert()
-      .into(Kickboard)
-      .values([
-        { deerName: '건대1' },
-        { deerName: '건대2' },
-        { deerName: '여수1' },
-        { deerName: '여수2' },
-      ])
-      .orIgnore()
-      .execute();
-
     const areas = this.areaRepository.query(
       `INSERT IGNORE INTO area(id, area_boundary, area_center, area_coords) VALUES
       (
@@ -58,13 +43,30 @@ export class AppService implements OnApplicationBootstrap {
       )`,
     );
 
+    await this.kickboardRepository
+      .query(`INSERT IGNORE INTO kickboard(deerName, areaId)
+    SELECT '건대1', id FROM area
+    WHERE id = '건대'`);
+    await this.kickboardRepository
+      .query(`INSERT IGNORE INTO kickboard(deerName, areaId)
+    SELECT '건대2', id FROM area
+    WHERE id = '건대'`);
+    await this.kickboardRepository
+      .query(`INSERT IGNORE INTO kickboard(deerName, areaId)
+    SELECT '여수1', id FROM area
+    WHERE id = '여수'`);
+    await this.kickboardRepository
+      .query(`INSERT IGNORE INTO kickboard(deerName, areaId)
+    SELECT '여수2', id FROM area
+    WHERE id = '여수'`);
+
     const regularPolicy = this.regularPolicyRepository
       .createQueryBuilder()
       .insert()
       .into(RegularPolicy)
       .values([
-        { id: "건대", basic: 3000, ratePerMinute: 300 },
-        { id: "여수", basic: 4000, ratePerMinute: 400 },
+        { id: '건대', basic: 3000, ratePerMinute: 300 },
+        { id: '여수', basic: 4000, ratePerMinute: 400 },
       ])
       .orIgnore()
       .execute();
